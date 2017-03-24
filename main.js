@@ -1,28 +1,33 @@
-var res = '1234';
-function guess(arg) {
-  var re = {
+"use strict"
+// var expect = '1234';
+function guess(expect, test_case) {
+  test_case = test_case.toString();
+  expect = expect.toString();
+  var res = {
     right: 0,
     match: 0,
   }
-  if (arg.length != 4) {
-    return
-  } else {
-    var rightidex = [];
-    for (var i = 0, arglen = arg.length; i < arglen; i++) {
-      for (var j = 0, reslen = res.length; j < reslen; j++) {
-        if (i == j && arg[i] == res[j]) {
-          re.right++;
-          rightidex.push(i);
-        }
+  if (test_case.length != 4 || expect.length != 4) {
+    return {
+      A: 0,
+      B: 0
+    }
+  }
+  var right_idex = [];
+  for (var i = 0, test_caselen = test_case.length; i < test_caselen; i++) {
+    for (var j = 0, expect_len = expect.length; j < expect_len; j++) {
+      if (i == j && test_case[i] == expect[j]) {
+        res.right++;
+        right_idex.push(i);
       }
-      if (res.indexOf(arg[i]) > -1 && !isInArray(i, rightidex)) {
-        re.match++;
-      }
+    }
+    if (expect.indexOf(test_case[i]) > -1 && !isInArray(i, right_idex)) {
+      res.match++;
     }
   }
   return {
-    A: re.right,
-    B: re.match
+    A: res.right,
+    B: res.match
   }
 }
 
